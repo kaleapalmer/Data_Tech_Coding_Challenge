@@ -1,0 +1,25 @@
+{
+  "name": "data_tech_coding_challenge",
+  "version": "1.0.0",
+  "description": "Write Javascript that completes the tasks described below. Conditions for acceptance are:",
+  "main": "challenge1.js",
+  "dependencies": {},
+  "devDependencies": {
+    "curl": "^0.1.4",
+    "jquery": "^3.4.1",
+    "jsdom": "^16.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaleapalmer/Data_Tech_Coding_Challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaleapalmer/Data_Tech_Coding_Challenge/issues"
+  },
+  "homepage": "https://github.com/kaleapalmer/Data_Tech_Coding_Challenge#readme"
+}
