@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "Write Javascript that completes the tasks described below. Conditions for acceptance are:",
   "main": "challenge1.js",
-  "dependencies": {},
-  "devDependencies": {
-    "curl": "^0.1.4",
-    "jquery": "^3.4.1",
-    "jsdom": "^16.2.1"
+  "dependencies": {
+    "chromedriver": "^80.0.1",
+    "selenium-webdriver": "^2.53.3"
   },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
