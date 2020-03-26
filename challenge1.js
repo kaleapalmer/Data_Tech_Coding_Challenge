@@ -1,6 +1,4 @@
-const {Builder, By, Key, until} = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
-`require('os').tmpdir()`
+const {Builder, By, until} = require('selenium-webdriver');
 
 /**
  * This function will find price and currency of a given target product
@@ -31,7 +29,6 @@ async function getProductInfo(url) {
         targetProductObj.price = parseFloat(itemPrice.substr(1)); //parsing price into float without the "$" symbol
         targetProductObj.currency = itemCurrency;
         return(targetProductObj);
-
     }
     finally {
         await driver.quit();
@@ -39,7 +36,7 @@ async function getProductInfo(url) {
 }
 
 /**
- * Will call getProductInfo function and print out the result
+ * This function will call getProductInfo() and print out the result
  */
 (function execute() {
     const url = 'https://www.target.com/p/playstation-174-4-1tb-console/-/A-52416598';
