@@ -1,47 +1,49 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
+`require('os').tmpdir()`
 
+/**
+ * This function will find price and currency of a given target product
+ * @param url string of target product
+ * @returns {Promise<string|{}>} promise of the product object or invalid url message
+ */
 async function getProductInfo(url) {
-    //object that will hold the price and currency of the product
-    const itemObj = {}
+    if (!url.includes("https://www.target.com/p/")) {
+        return "Invalid URL. URL needs to be a target product."
+    }
+
+    const targetProductObj = {};
 
     let driver = await new Builder().forBrowser('chrome').build();
     try {
         await driver.get(url);
 
-        //Find the ele that holds the currency
-        //TODO Find the correct element that holds the currency
-        let obj = await driver.findElement(By.xpath("//*[@id=\"viewport\"]/div[4]"));
+        //Find the DOM element containing info about the currency
+        const productWebInfo = await driver.findElement(By.xpath("//*[@id=\"viewport\"]/div[4]//*")).getAttribute("textContent");
+        const productWebInfoJson = JSON.parse(productWebInfo);
 
-        // console.log(obj)
-        // let objparse = await obj.getText();
-        // console.log(objparse)
+        //Find currency in JSON object
+        const itemCurrency = productWebInfoJson["@graph"][0]["offers"]["priceCurrency"];
 
+        //Find the DOM element containing the price
+        let itemPrice= await driver.wait(until.elementLocated(By.css("div[data-test='product-price']")), 30000, 'Timed out after 30 seconds', 5000).getText();
 
-        //Wait for element that holds the price to load and
-        let priceElement= await driver.wait(until.elementLocated(By.css("div[data-test='product-price']")), 30000, 'Timed out after 30 seconds', 5000);
-        itemObj.price = await priceElement.getText();
+        targetProductObj.price = parseFloat(itemPrice.substr(1)); //parsing price into float without the "$" symbol
+        targetProductObj.currency = itemCurrency;
+        return(targetProductObj);
 
-        //TODO parse price from string to int before putting in the object
-        // itemObj.price = price.parseInt();
-        console.log(itemObj)
-
-
-
-
-        // console.log(itemObj)
-    } finally {
+    }
+    finally {
         await driver.quit();
     }
 }
 
-function execute() {
-
-    //Change below url for information about different target products
+/**
+ * Will call getProductInfo function and print out the result
+ */
+(function execute() {
     const url = 'https://www.target.com/p/playstation-174-4-1tb-console/-/A-52416598';
+    getProductInfo(url).then(result => console.log(result));
+})();
 
-    getProductInfo(url);
-}
-
-execute();
 
