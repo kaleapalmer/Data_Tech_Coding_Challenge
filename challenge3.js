@@ -1,5 +1,11 @@
 const {Builder} = require('selenium-webdriver');
 
+/**
+ * This function adds a click handler to the buttons on the top bar of the page
+ * The handler will trigger an alert if 'browserClick' cookie is set
+ * It will set 'browserClick' cookie with value of the button pressed if it is not set already
+ * @returns {Promise<void>} return value is not used
+ */
 async function manageCookie() {
     const url = "https://www.stadiumgoods.com/";
     let driver = await new Builder().forBrowser('chrome').build();
@@ -10,7 +16,7 @@ async function manageCookie() {
         const cookieFound = await driver.manage().getCookie('browserClick');
         const cookieValue = cookieFound? cookieFound.value: "";
 
-        const script = "cookieFound = arguments[0];" +
+        const addClickHandlerSetCookieScript = "cookieFound = arguments[0];" +
             "cookieValue = arguments[1];" +
             "const navBar = document.querySelector(\"ol[class='nav-primary']\");" +
             "const navButtons = navBar.querySelectorAll(\"a.level0\");" +
@@ -27,7 +33,7 @@ async function manageCookie() {
             "}";
 
         // script will add click handler to buttons and check for 'browserClick cookie'
-        await driver.executeScript(script, cookieFound, cookieValue);
+        await driver.executeScript(addClickHandlerSetCookieScript, cookieFound, cookieValue);
 
         // keeping below commented code to make the string script easier to format if changed
 
@@ -41,12 +47,8 @@ async function manageCookie() {
         //         return button.text;
         //     })
         // }
-
-
-
     } finally {
     }
-
 }
 
 /**
