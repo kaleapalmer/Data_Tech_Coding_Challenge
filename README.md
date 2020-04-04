@@ -16,6 +16,8 @@
 Note:
 When each of the challenges is run, a window of Google Chrome will popup. 
 
+---- 
+
 ##### Write Javascript that completes the tasks described below. Conditions for acceptance are:
 
 * Code must fulfill the task described
