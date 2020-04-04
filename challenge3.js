@@ -1,4 +1,4 @@
-const {Builder, By, Key, until} = require('selenium-webdriver');
+const {Builder} = require('selenium-webdriver');
 
 async function manageCookie() {
     const url = "https://www.stadiumgoods.com/";
@@ -7,56 +7,51 @@ async function manageCookie() {
     try {
         await driver.get(url);
 
-        let chosenBrand = "";
+        const cookieFound = await driver.manage().getCookie('browserClick');
+        const cookieValue = cookieFound? cookieFound.value: "";
 
-        const script = "const navBar = document.querySelector(\"ol[class='nav-primary']\");" +
+        const script = "cookieFound = arguments[0];" +
+            "cookieValue = arguments[1];" +
+            "const navBar = document.querySelector(\"ol[class='nav-primary']\");" +
             "const navButtons = navBar.querySelectorAll(\"a.level0\");" +
             "for (let i = 0; i < navButtons.length; i++) {" +
                 "let button = navButtons[i];" +
                 "button.addEventListener('click', function(evt) {" +
-                    "chosenBrand = button.text;" +
-                    "window.alert(button.text)" +
+                    "if (!cookieFound) {" +
+                        "document.cookie = 'browserClick=' + button.text;" +
+                    "}" +
+                    "else {" +
+                        "window.alert(cookieValue);" +
+                    "}" +
                 "})" +
             "}";
+
+        // script will add click handler to buttons and check for 'browserClick cookie'
+        await driver.executeScript(script, cookieFound, cookieValue);
+
+        // keeping below commented code to make the string script easier to format if changed
 
         // for (let i = 0; i < navButtons.length; i++) {
         //     let button = navButtons[i];
         //     button.addEventListener('click', function(evt) {
-        //         // chosenBrand = ;button.text
+        //         // chosenBrand = button.text;
+        //         if (!cookieFound) {document.cookie = 'browserClick=' + button.text;} else {window.alert(cookieValue);}
+        //
         //         window.alert(button.text)
         //         return button.text;
         //     })
         // }
 
-        // const callback = arguments[arguments.length - 1];
 
-        // for (let i = 0; i < navButtons.length; i++) {let button = navButtons[i];button.addEventListener('click', function(evt) {window.alert(button.text)})}
-
-        driver.executeScript(script);
-        console.log(chosenBrand);
-
-        const cookieFound = await driver.manage().getCookie("browserClick");
-        if(cookieFound) {
-            //trigger an alert that displays the cookie value
-            const alertScript = "window.alert('" + cookieFound.value + "')";
-
-            driver.executeScript(alertScript);
-        }
-        else {
-
-            const name = "browserClick";
-            // TODO replace the value of the cookie with the shoe brand clicked on
-            const value = "newShoe";
-
-            await driver.manage().addCookie(name, value);
-        }
 
     } finally {
     }
 
 }
 
-
+/**
+ *
+ */
 (function execute() {
     manageCookie();
 })();

@@ -1,5 +1,10 @@
 const {Builder, By, until} = require('selenium-webdriver');
 
+/**
+ * This function will add a click handler for every signup button
+ * The click handler will trigger an alert printing out which signup button was pressed
+ * @returns {Promise<void>}
+ */
 async function assignClickHandler() {
     const url = "https://curiositystream.com/";
     let driver = await new Builder().forBrowser('chrome').build();
@@ -15,7 +20,6 @@ async function assignClickHandler() {
                 "window.alert(\"Clicked Button \" + (i + 1))});" +
             "}";
 
-        //TODO try making this an async execute
         driver.executeScript(addClickHandlerScript)
 
     } finally {
@@ -23,7 +27,7 @@ async function assignClickHandler() {
 }
 
 /**
- * Will call other functions to perform challenge 2
+ * This function will call assignClickHandler()
  */
 (function execute() {
     assignClickHandler();
