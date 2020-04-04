@@ -1,6 +1,22 @@
 # Data Tech Coding Challenge
 
-Write Javascript that completes the tasks described below. Conditions for acceptance are:
+**How to run the challenge code**
+
+1. Clone the repository
+2. Make sure you have npm package manager installed
+3. Run `npm install`
+4. For challenges run the following individually:
+
+`node challenge1.js` 
+
+`node challenge2.js`
+
+`node challenge3.js`
+
+Note:
+When each of the challenges is run, a window of Google Chrome will popup. 
+
+##### Write Javascript that completes the tasks described below. Conditions for acceptance are:
 
 * Code must fulfill the task described
 
